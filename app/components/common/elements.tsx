@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 import Quill from "@/app/components/ui/quill";
 import Select from "react-select";
+import { FieldProps } from "@/app/interfaces/elements";
 
-interface TextFieldProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
-export function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
+export function TextField<T extends FieldValues>(
+  props: FieldProps<T, HTMLInputElement>,
+) {
   return (
     <Controller
       name={props.name}
@@ -21,14 +18,8 @@ export function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
 
 TextField.displayName = "TextField";
 
-interface PasswordFieldProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
 export function PasswordField<T extends FieldValues>(
-  props: PasswordFieldProps<T>,
+  props: FieldProps<T, HTMLInputElement>,
 ) {
   const [obscured, setObscured] = useState<boolean>(true);
   return (
@@ -52,19 +43,9 @@ export function PasswordField<T extends FieldValues>(
 
 PasswordField.displayName = "PasswordField";
 
-interface Options {
-  value: string;
-  label: string;
-}
-
-interface SelectFieldProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  options: Options[];
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
-export function SelectField<T extends FieldValues>(props: SelectFieldProps<T>) {
+export function SelectField<T extends FieldValues>(
+  props: FieldProps<T, HTMLSelectElement>,
+) {
   return (
     <Controller
       name={props.name}
@@ -73,9 +54,9 @@ export function SelectField<T extends FieldValues>(props: SelectFieldProps<T>) {
         <Select
           className={props.className}
           {...field}
-          value={props.options.find((c) => c.value === field.value)}
+          value={props.options?.find((c) => c.value === field.value)}
           onChange={(val) => field.onChange(val)}
-          defaultValue={props.options.find((c) => c.value === field.value)}
+          defaultValue={props.options?.find((c) => c.value === field.value)}
           options={props.options}
         />
       )}
@@ -85,13 +66,9 @@ export function SelectField<T extends FieldValues>(props: SelectFieldProps<T>) {
 
 SelectField.displayName = "SelectField";
 
-interface FileFieldProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
-export function FileField<T extends FieldValues>(props: FileFieldProps<T>) {
+export function FileField<T extends FieldValues>(
+  props: FieldProps<T, HTMLInputElement>,
+) {
   return (
     <Controller
       name={props.name}
@@ -109,13 +86,9 @@ export function FileField<T extends FieldValues>(props: FileFieldProps<T>) {
 
 FileField.displayName = "FileField";
 
-interface QuillFieldProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
-export function QuillField<T extends FieldValues>(props: QuillFieldProps<T>) {
+export function QuillField<T extends FieldValues>(
+  props: FieldProps<T, HTMLInputElement>,
+) {
   return (
     <Controller
       name={props.name}
@@ -133,13 +106,9 @@ export function QuillField<T extends FieldValues>(props: QuillFieldProps<T>) {
 
 QuillField.displayName = "QuillField";
 
-interface TextAreaProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLTextAreaElement> {
-  name: FieldPath<T>;
-  control: Control<T>;
-}
-
-export function TextArea<T extends FieldValues>(props: TextAreaProps<T>) {
+export function TextArea<T extends FieldValues>(
+  props: FieldProps<T, HTMLTextAreaElement>,
+) {
   return (
     <Controller
       name={props.name}
